@@ -1,3 +1,4 @@
+// hi
 // 5/16/22 MistyHelloWorld.js  Ruth Mueller
 // using the misty hello world tutorial: https://docs.mistyrobotics.com/misty-ii/get-started/hello-world/
 
