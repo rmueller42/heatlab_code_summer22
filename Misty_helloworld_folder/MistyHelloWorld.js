@@ -30,33 +30,17 @@
 
 misty.Debug("  ________________DEBUG_MESSAGE: The MistyHelloWorld.js skill is starting!");
 
-// Returns a random int between min and max, copied from tutorial
-function getRandomInt(min, max) {
-    return Math.floor(Math.random()*(max-min)+1)+min;
-}
-
 //causes an event to happen 
 //misty.RegisterTimerEvent("_look_around", getRandomInt(5, 10) * 10000, true);
 misty.RegisterTimerEvent("MyBlink", getRandomInt(2, 10) * 1000, true);
+_MyBlink();
 
 //---------------------hello calls for robot life
 misty.SetBlinkSettings(true);
 playHello();
 misty.Debug("  ________________DEBUG_MESSAGE: AAAAAAAAA");
-misty.DisplayImage("e_eye3.jpg");
-_MyBlink();
+
 misty.Debug("  ________________DEBUG_MESSAGE: BBBBBBBBB"); 
-
-
-// ---------------------My blink function ---------------------------------------
-// takes a string open_eyes and string closed_eyes and creates random blinking events
-function _MyBlink(){
-    misty.Debug("  ________________DEBUG_MESSAGE: Blink called!");
-    misty.DisplayImage("e_SystemBlinkStandard.jpg");
-    misty.Pause(200); 
-    misty.DisplayImage("e_eye3.jpg");
-}
-
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -333,3 +317,20 @@ function _GetLogFile(data) {
 misty.GetLogFile();
 misty.Debug("got log file");  // see what this outputs!!!
 */
+
+
+// ---------------------My blink function ---------------------------------------
+// This is coupled with a callback event, causes the misty to blink every now and then
+// the two ee images are hard coded!
+function _MyBlink(){
+    misty.Debug("  ________________DEBUG_MESSAGE: Blink called!");
+    misty.DisplayImage("e_SystemBlinkStandard.jpg");
+    misty.Pause(200); 
+    misty.DisplayImage("e_eye3.jpg");
+}
+
+// Returns a random int between min and max, copied from tutorial
+function getRandomInt(min, max) {
+    return Math.floor(Math.random()*(max-min)+1)+min;
+}
+
