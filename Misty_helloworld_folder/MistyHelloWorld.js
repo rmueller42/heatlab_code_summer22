@@ -32,7 +32,9 @@ misty.Debug("  ________________DEBUG_MESSAGE: The MistyHelloWorld.js skill is st
 
 //causes an event to happen 
 //misty.RegisterTimerEvent("_look_around", getRandomInt(5, 10) * 10000, true);
-misty.RegisterTimerEvent("MyBlink", getRandomInt(2, 10) * 1000, true);
+//misty.RegisterTimerEvent("MyBlink", getRandomInt(2, 10) * 1000, true);  // I want it to blink once I've figured out sound
+misty.RegisterTimerEvent("Listening", 2000, true);
+_Listening();
 _MyBlink();
 
 //---------------------hello calls for robot life
@@ -42,53 +44,49 @@ misty.Debug("  ________________DEBUG_MESSAGE: AAAAAAAAA");
 
 misty.Debug("  ________________DEBUG_MESSAGE: BBBBBBBBB"); 
 
+// I'd like to have some kind of setting such that if there's a random blinking event triggered, it doesn't 
+//   stop a listening event
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                         AUDIO LOCALIZATION FROM API
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+// from https://docs.mistyrobotics.com/v1.12.7.10330/misty-ii/javascript-sdk/code-samples/ 
+// Prepares Misty to start listening for audio.
 
 /*
-// Prepares Misty to start listening for audio.
-misty.MoveHeadDegrees(-15, 0, 0, 50);
-registerAudioLocalization();
+    audio: 
+    Straight ahead - 90
+*/
 
-// Misty must be recording audio to stream audio localization data.
-// When this sample starts, Misty starts recording audio to a new file
-// called "deleteThis.wav"
-misty.StartRecordingAudio("deleteThis.wav");
-misty.ChangeLED(0, 0, 255); // Changes LED to blue; "I'm listening!"
-// Stops recording after 10 seconds. Extend this duration to keep Misty
-// listening longer.
-misty.Pause(10000);
-misty.StopRecordingAudio();
-misty.ChangeLED(0, 255, 0); // Changes LED to green; "Done listening!"
+function _Listening(){
+    misty.Debug("_________________DEBUG_MESSAGE: started Listening");
+    registerAudioLocalization();
+    misty.StartRecordingAudio("deleteThis.wav"); // Misty must be recording audio to stream audio localization data.
+    misty.ChangeLED(0, 0, 255); // Changes LED to blue; "I'm listening!"
+    misty.Pause(10000); // Stops recording after 10 seconds. Extend this duration to keep Misty
+    misty.StopRecordingAudio();
+    misty.ChangeLED(0, 255, 0); // Changes LED to green; "Done listening!"
+    misty.Debug("_________________DEBUG_MESSAGE: stopped Listening");
+}
 
 // Sets up our SourceTrackDataMessage event listener.
 function registerAudioLocalization() {
-    // Tells the system to print the value of the DegreeOfArrivalSpeech
-    // property in the AdditionalResults array that comes back with
-    // "DegreeOfArrivalSpeech" events. This value indicates the angle
-    // relative to the direction Misty's head is facing where she
-    // detected the loudest voice.
     misty.AddReturnProperty("soundIn", "DegreeOfArrivalSpeech");
-    // Registers a new event listener for SourceTrackDataMessage events.
-    // (We call this event listener soundIn, but you can use any name
-    // you like. Giving event listeners a custom name means you can
-    // create multiple event listeners for the same type of event in a
-    // single skill.) Our soundIn event listener has a debounce
-    // of 100 ms, and we set the fourth argument (keepAlive) to true,
-    // which tells the system to keep listening for
-    // SourceTarckDataMessage events after the first message comes back
     misty.RegisterEvent("soundIn", "SourceTrackDataMessage", 100, true);
 }
 
 // Defines how Misty should respond to soundIn events. Data from each
 // soundIn event is passed into this callback function.
+
+//// PROGRESS:  I think the code for where it's looking has a different system of degrees between the location and the head, I shoudl accomidate for that
 function _soundIn(data) {
     // Prints the degree of arrival speech as a debug message.
-    misty.Debug(data.AdditionalResults[0].toString() + " <- degree of arrival for detected audio");
+    misty.Debug( "________________DEBUG_MESSAGE: "+ data.AdditionalResults[0].toString() + " <- degree of arrival for detected audio");
+    misty.MoveHeadDegrees(-15, 0, 90 -data.AdditionalResults[0], 70);
 }
-*/
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                      IMAGE STUFFS
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -232,12 +230,14 @@ function playHello() {  // waves right arm, says hello, and prints hello nerds a
     // pause(3000);
 
     misty.MoveArmDegrees("right", -80, 100); // Right arm up to wave
-    //misty.PlayAudio("s_PhraseHello.wav", 25);  // SAY HELLO (commented out to avoid bugging people in lab)
+    misty.PlayAudio("s_PhraseHello.wav", 25);  // SAY HELLO (commented out to avoid bugging people in lab)
     misty.DisplayText("Hello Nerds!", "text_layer");
     misty.Pause(2000);
     misty.MoveArmDegrees("both", 80, 90); // Both arms down
     misty.SetTextDisplaySettings("text_layer", false, true,false);
 }
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                       AUDIO VISUAL STREAMING
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -271,7 +271,7 @@ function avStream(){
 // call misty.StopAvStreaming();  to turn off the cameral
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//              FACIAL RECOGNITION (can't be done at the same time as av)
+//              FACIAL RECOGNITION (can't be done at the same time as av streaming)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Invoke this function to start Misty recognizing faces.
@@ -323,7 +323,6 @@ misty.Debug("got log file");  // see what this outputs!!!
 // This is coupled with a callback event, causes the misty to blink every now and then
 // the two ee images are hard coded!
 function _MyBlink(){
-    misty.Debug("  ________________DEBUG_MESSAGE: Blink called!");
     misty.DisplayImage("e_SystemBlinkStandard.jpg");
     misty.Pause(200); 
     misty.DisplayImage("e_eye3.jpg");
