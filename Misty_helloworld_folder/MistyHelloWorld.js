@@ -25,16 +25,16 @@
            validate directory allows you to make the json file if needed
 */
 
-//-------------------  MAIN FUNCTION CALLS, INITIAL THINGS TO DO ---------------------------
+//-------------------  MAIN FUNCTION CALLS, INITIAL THINGS TO DO --------------------------- 
 // this is where I've been working on new stuff
 
 misty.Debug("  ________________DEBUG_MESSAGE: The MistyHelloWorld.js skill is starting!");
 
 //causes an event to happen 
 //misty.RegisterTimerEvent("_look_around", getRandomInt(5, 10) * 10000, true);
-//misty.RegisterTimerEvent("MyBlink", getRandomInt(2, 10) * 1000, true);  // I want it to blink once I've figured out sound
-misty.RegisterTimerEvent("Listening", 2000, true);
-_Listening();
+misty.RegisterTimerEvent("MyBlink", getRandomInt(2, 20) * 1000, true);  // I want it to blink once I've figured out sound
+//misty.RegisterTimerEvent("Listening", 20000, true);
+//_Listening();
 _MyBlink();
 
 //---------------------hello calls for robot life
@@ -54,6 +54,10 @@ misty.Debug("  ________________DEBUG_MESSAGE: BBBBBBBBB");
  
 // from https://docs.mistyrobotics.com/v1.12.7.10330/misty-ii/javascript-sdk/code-samples/ 
 // Prepares Misty to start listening for audio.
+
+/* 0/360 degree heading represents the current direction Misty's head is facing. Misty returns audio
+ localization data relative to this 0/360 degree heading, which appears at the top of the Audio Localization Visualization.
+*/
 
 /*
     audio: 
@@ -230,7 +234,7 @@ function playHello() {  // waves right arm, says hello, and prints hello nerds a
     // pause(3000);
 
     misty.MoveArmDegrees("right", -80, 100); // Right arm up to wave
-    misty.PlayAudio("s_PhraseHello.wav", 25);  // SAY HELLO (commented out to avoid bugging people in lab)
+   // misty.PlayAudio("s_PhraseHello.wav", 25);  // SAY HELLO (commented out to avoid bugging people in lab)
     misty.DisplayText("Hello Nerds!", "text_layer");
     misty.Pause(2000);
     misty.MoveArmDegrees("both", 80, 90); // Both arms down

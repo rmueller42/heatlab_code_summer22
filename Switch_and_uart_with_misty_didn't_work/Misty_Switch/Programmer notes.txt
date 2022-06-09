@@ -1,0 +1,4 @@
+For SEGGER imbeded studio for RISC-V, used with the RISC-V thing plus microcontroller 
+I could get the uart signal to send a character or word from the code, but couldn't get misty to read it,
+and I could tell it to read uart from misty (baud 9600/8-N-1), 
+but it output a bunch of letters that were'nt what I was looking for.  

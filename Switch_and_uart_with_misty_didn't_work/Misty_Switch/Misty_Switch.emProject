@@ -1,0 +1,49 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="Misty_Switch" target="20" version="2">
+  <project Name="Misty_Switch">
+    <configuration
+      LIBRARY_IO_TYPE="SEMIHOST (host-formatted)"
+      Name="Common"
+      RISCV_TOOLCHAIN_VARIANT="Standard"
+      arm_compiler_variant="SEGGER"
+      arm_linker_heap_size="1024"
+      arm_linker_stack_size="1024"
+      arm_linker_variant="SEGGER"
+      build_generic_options_file_name=""
+      link_linker_script_file="Setup/SEGGER_Flash_RV32.icf"
+      linker_output_format="hex"
+      linker_section_placements_segments="FLASH1 RX 0x20000000 0x20000000;RAM1 RWX 0x80000000 0x00004000"
+      project_directory=""
+      project_type="Executable"
+      rv_abi="ilp32"
+      rv_arch_ext=""
+      rv_architecture="rv32i"
+      rv_debug_extensions="None"
+      rv_toolchain_prefix=""
+      target_device_name="FE310" />
+    <folder Name="Source">
+      <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
+      <file file_name="Source/main.c" />
+      <file file_name="EasyREDVIO.h" />
+      <file file_name="REDV_UART.h" />
+    </folder>
+    <folder Name="Setup">
+      <file file_name="Setup/SEGGER_Flash_RV32.icf" />
+    </folder>
+    <folder Name="System">
+      <file file_name="System/SEGGER_RV32_crt0.s" />
+    </folder>
+    <configuration Name="Debug" debug_target_connection="J-Link" />
+  </project>
+  <configuration
+    Name="Debug"
+    c_preprocessor_definitions="DEBUG"
+    gcc_debugging_level="Level 3"
+    gcc_optimization_level="None" />
+  <configuration
+    Name="Release"
+    c_preprocessor_definitions="NDEBUG"
+    gcc_debugging_level="Level 2"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="Level 2 balanced" />
+</solution>
