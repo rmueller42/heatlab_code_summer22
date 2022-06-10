@@ -1,17 +1,9 @@
-import {speak} from "./tools/APIcalls.js";
-
 /* 
  * 
  * SPEAK
  * 
  * Functions for making Misty speak. 
 */ 
-
-let speech = {
-    "Text": "",
-    "Flush": false,
-    "UtteranceId": ""
-};
 
 document.addEventListener('keydown', keyPressed)
 
@@ -389,5 +381,11 @@ function keyPressed(e) {
         }
         speech00J();
         
+    }
+    if (e.code === 'KeyK') {
+        var button = document.getElementById("00K");
+        if (button.checked === false) {
+            button.checked = true;
+        }        
     }
 }
