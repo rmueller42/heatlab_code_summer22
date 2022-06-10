@@ -1,11 +1,6 @@
 /* GLOBAL VARIABLES*/
 const ip = "172.28.92.36";
-// Create new instane of LightSocket called socket.
-// let socket;
-// let data = {
-//     "LinearVelocity": 0,
-//     "AngularVelocity": 0
-// }
+
 
 let sound = {
     // "FileName": "https://drive.google.com/file/d/1L3hBHfi5zNf8y1WuvgE6FBWrhrcMPYrS/preview"
