@@ -1,13 +1,13 @@
 let created;
 let pushed;
-let pushedInt;
 let released;
-let releasedInt;
 let timeDiff;
 let socket;
 let numTimePressed;
 
-const regex = /[0-9]{2}\.[0-9]*/;
+// const regexSec = /[0-9]{2}\.[0-9]*/;
+// const regexMin = /:[0-9]{2}/;
+// const regexHr = /T[0-9]{2}/;
 
 function startBumpSensor() {
     numTimePressed = 0;
@@ -23,7 +23,7 @@ function stopBumpSensor() {
 
 function openCallback() {
     console.log("socket opened");
-    
+
     socket.Subscribe("LeftBumpSensor", "BumpSensor", null, 
         "sensorName", "==", "Bump_FrontLeft", null, _leftBumpSensor);
 
@@ -37,23 +37,21 @@ function _leftBumpSensor(data) {
 
         if (created !== null && isContacted) {
             numTimePressed++;
-            console.log(numTimePressed);
+            console.log('Press Num: ' + numTimePressed);
             playSound();
             image["FileName"] = "e_EcstacyHilarious.jpg";
             displayImage(image);
-            pushed = created.match(regex);
-            pushedInt = parseFloat(pushed);
             
+            pushed = new Date(created);
             console.log("Pushed: " + pushed);
         }
         if (created !== null && !isContacted) {
             stopAudio();
             image["FileName"] = "e_eye3.jpg";
             displayImage(image);
-            released = created.match(regex);
-            releasedInt = parseFloat(released);
 
-            timeDiff = releasedInt - pushedInt;
+            released = new Date(created);
+            timeDiff = (released - pushed) / 1000;
 
             console.log("Released: " + released);
             console.log("Duration: " + timeDiff);
@@ -66,22 +64,22 @@ function _leftBumpSensor(data) {
     }
 }
 
-
 function playSound() {
-    if (numTimePressed === 1) {
-        sound["FileName"] = "ringtone.mp3";
-    }
-    else if (numTimePressed === 2) {
-        sound["FileName"] = "starWars.mp3";
+    sound["FileName"] = "s_Fear.wav";
+    playAudio(sound);
+    if (numTimePressed === 2) {
+        speech00Z();
     }
     else if (numTimePressed === 3) {
-        sound["FileName"] = "oneVoice.mp3";
+        speech00X();
     }
     else if (numTimePressed === 4) {
-        sound["FileName"] = "aThousandMiles.mp3";
+        speech00C();
     }
-    else {
-        sound["FileName"] = "piratesOfCaribbean.mp3";
+    else if (numTimePressed === 5) {
+        speech00V();
     }
-    playAudio(sound);
+    else if (numTimePressed >= 6) {
+        speech00B();
+    }
 }
