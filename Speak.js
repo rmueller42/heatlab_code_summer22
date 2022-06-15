@@ -19,13 +19,13 @@ document.addEventListener('keydown', keyPressed)
  * Experiment 1
  */
 function speech001() {
-    speech["Text"] = "<speak>Hi, I am B34, my pronouns are they, them, theirs how about you?</speak>";
+    speech["Text"] = "<speak>Hi, I am B34, my pronouns are they, them, theirs. How about you?</speak>";
     speech["UtteranceId"] = "001";
     speak(speech);
 }
 
 function speech002() {
-    speech["Text"] = "<speak>Hi, I am B34, my pronouns are it, it, its how about you?</speak>";
+    speech["Text"] = "<speak>Hi, I am B34, my pronouns are it, it, its. How about you?</speak>";
     speech["UtteranceId"] = "002";
     speak(speech);
 }
